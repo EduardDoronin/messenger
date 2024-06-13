@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { calculateCombinedId } from "../otherLogic/combine";
 import {
   collection,
   query,
@@ -79,10 +80,6 @@ export default function Suchleiste() {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function calculateCombinedId(user1: any, user2: any) {
-    return user1?.uid > user2?.uid ? user1?.uid + user2?.uid : user2?.uid + user1?.uid;
   }
 
   return (
