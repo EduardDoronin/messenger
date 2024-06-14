@@ -2,27 +2,30 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../../../firebase";
 import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, doc, DocumentData } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
-  const [chats, setChats] = useState();
-  const currentUser = useContext(AuthContext);
+  const [chats, setChats] = useState<DocumentData | undefined>();
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    function getChats() {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.currentUser?.uid), (doc: any) => {
-        setChats(doc.data());
-      });
+    const getChats = async () => {
+      if (currentUser?.uid) {
+        onSnapshot(doc(db, "userChats", currentUser.uid), (docSnapshot) => {
+          setChats(docSnapshot.data());
+        });
+      }
+    };
 
-      return () => {
-        unsub();
-      };
-    }
+    getChats();
+  }, [currentUser?.uid]);
 
-    currentUser.currentUser?.uid && getChats();
-  }, [currentUser.currentUser?.uid]);
-
-  console.log(chats);
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
   return (
     <>
@@ -33,12 +36,12 @@ export default function Sidebar() {
           </div>
           <div className="flex items-center">
             <button
-              onClick={() => signOut(auth)}
+              onClick={handleLogout}
               className="p-1 mr-2 duration-300 bg-gray-100 rounded shadow-none cursor-pointer hover:shadow-lg hover:shadow-gray-400 focus:cursor-wait"
             >
               Logout
             </button>
-            {currentUser && <div>{currentUser.currentUser?.email}</div>}
+            {currentUser && <div>{currentUser.email}</div>}
           </div>
         </div>
         <div className="flex flex-col pt-4 m-4 border-t border-t-gray-800">
