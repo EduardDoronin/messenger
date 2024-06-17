@@ -3,14 +3,14 @@ import { AuthContext } from "./AuthContext";
 import { calculateCombinedId } from "../components/otherLogic/combine";
 
 interface IUser {
-  uid: string;
-  displayname: string;
-  email: string;
+  uid: any;
+  displayname: any;
+  email: any;
 }
 
 interface IChatState {
-  chatId: string | null;
-  user: IUser | null;
+  chatId: any;
+  user: any;
 }
 
 interface IChatAction {
@@ -37,11 +37,13 @@ export const ChatContextProvider = ({ children }: { children: React.ReactNode })
   const chatReducer = (state: IChatState, action: IChatAction): IChatState => {
     switch (action.type) {
       case "CHANGE_USER":
-        const combinedId = calculateCombinedId(currentUser?.uid, action.payload.uid);
-
+        console.log(typeof currentUser?.uid, "       test", typeof action.payload);
         return {
           user: action.payload,
-          chatId: combinedId,
+          chatId:
+            currentUser.uid > action.payload.uid
+              ? currentUser.uid + action.payload.uid
+              : action.payload.uid + currentUser.uid,
         };
       default:
         return state;
@@ -49,7 +51,6 @@ export const ChatContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
-
   return <ChatContext.Provider value={{ data: state, dispatch }}>{children}</ChatContext.Provider>;
 };
 

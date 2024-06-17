@@ -57,7 +57,7 @@ export default function Suchleiste() {
 
   async function handleSelect() {
     const combinedId = calculateCombinedId(currentUser, user);
-
+    console.log(combinedId);
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
