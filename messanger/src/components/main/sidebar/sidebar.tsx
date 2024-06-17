@@ -38,9 +38,6 @@ export default function Sidebar() {
       <div className="w-1/4 border-r border-r-gray-800">
         <div className="flex flex-row justify-between m-4">
           <div className="flex items-center">
-            <div>Chat</div>
-          </div>
-          <div className="flex items-center">
             <button
               onClick={handleLogout}
               className="p-1 mr-2 duration-300 bg-gray-100 rounded shadow-none cursor-pointer hover:shadow-lg hover:shadow-gray-400 focus:cursor-wait"
@@ -52,14 +49,13 @@ export default function Sidebar() {
         </div>
         <div className="flex flex-col pt-4 m-4 border-t border-t-gray-800">
           {chats &&
-            Object.keys(chats).map((chatId) => (
+            Object.values(chats).map((chat) => (
               <div
-                key={chatId}
-                className="px-2 py-2 my-3 transition-shadow duration-300 shadow-none cursor-pointer rounded-xl hover:shadow-lg hover:shadow-gray-400 bg-slate-500"
-                // onClick={() => handleSelect(chatId)}
-                onClick={() => console.log(chatId)}
+                key={chat.chatId}
+                className="px-2 py-2 my-3 transition-shadow duration-300 shadow-none cursor-pointer rounded-xl hover:shadow-lg hover:shadow-gray-400 bg-slate-500 "
+                onClick={() => handleSelect(chat.userInfo)}
               >
-                {chats[chatId].userInfo.displayName}
+                {chat.userInfo.displayName}
               </div>
             ))}
         </div>

@@ -4,6 +4,8 @@ import { calculateCombinedId } from "../components/otherLogic/combine";
 
 interface IUser {
   uid: string;
+  displayname: string;
+  email: string;
 }
 
 interface IChatState {
