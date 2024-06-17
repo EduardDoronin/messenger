@@ -4,10 +4,13 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { onSnapshot, doc, DocumentData } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import ChatContext from "../../../context/ChatContext";
 
 export default function Sidebar() {
   const [chats, setChats] = useState<DocumentData | undefined>();
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +29,9 @@ export default function Sidebar() {
     await signOut(auth);
     navigate("/login");
   };
+  function handleSelect(u: any) {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  }
 
   return (
     <>
@@ -50,6 +56,8 @@ export default function Sidebar() {
               <div
                 key={chatId}
                 className="px-2 py-2 my-3 transition-shadow duration-300 shadow-none cursor-pointer rounded-xl hover:shadow-lg hover:shadow-gray-400 bg-slate-500"
+                // onClick={() => handleSelect(chatId)}
+                onClick={() => console.log(chatId)}
               >
                 {chats[chatId].userInfo.displayName}
               </div>

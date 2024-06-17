@@ -25,7 +25,7 @@ export default function Suchleiste() {
   const [user, setUser] = useState<User | undefined>();
   const [err, setErr] = useState(false);
 
-  const currentUser = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   async function handleSearch() {
     const q = query(collection(db, "users"), where("displayName", "==", username));
@@ -56,7 +56,7 @@ export default function Suchleiste() {
   }
 
   async function handleSelect() {
-    const combinedId = calculateCombinedId(currentUser.currentUser, user);
+    const combinedId = calculateCombinedId(currentUser, user);
 
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
@@ -70,12 +70,12 @@ export default function Suchleiste() {
         };
 
         const userInfoUser = {
-          uid: currentUser.currentUser?.uid,
-          displayName: currentUser.currentUser?.displayName,
+          uid: currentUser?.uid,
+          displayName: currentUser?.displayName,
         };
 
-        await updateUserChats(currentUser.currentUser.uid, combinedId, userInfoCurrentUser);
-        await updateUserChats(user.uid, combinedId, userInfoUser);
+        await updateUserChats(currentUser?.uid, combinedId, userInfoCurrentUser);
+        await updateUserChats(user?.uid, combinedId, userInfoUser);
       }
     } catch (error) {
       console.log(error);
