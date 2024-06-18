@@ -9,7 +9,6 @@ const Message = ({ message }: MessageProps) => {
   const { currentUser } = useContext(AuthContext);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Scroll to the bottom on new message
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);

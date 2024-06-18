@@ -34,13 +34,22 @@ export default function Chat() {
 
   return (
     <>
-      <div className="flex flex-col justify-between w-full mx-4">
-        {displayName ? <div>Chat with {displayName}</div> : <div> </div>}
+      <div className="grid grid-rows-[1fr, 1fr, 1fr] h-full w-full">
+        <div className="flex items-center justify-center">
+          {displayName ? (
+            <div className="text-2xl">
+              Chat with <span className="font-bold">{displayName}</span>
+            </div>
+          ) : (
+            <div> </div>
+          )}
+        </div>
 
-        <div className="flex flex-col w-full m-4">
-          <div className="mb-4">
-            <Messages />
-          </div>
+        <div className="m-4 overflow-y-auto ">
+          <Messages />
+        </div>
+
+        <div className="p-4">
           <Input />
         </div>
       </div>

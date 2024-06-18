@@ -29,7 +29,7 @@ export default function Messages({ currentUserId }: MessagesProps) {
   }, [data.chatId]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-y-auto">
       {messages.map((m: any) => {
         if (m.senderId && m.id) {
           return <Message key={m.id} message={m} />;

@@ -14,18 +14,16 @@ export default function Input() {
   async function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
 
-    // Make sure you've fetched the currentUser and uid is valid.
     if (currentUser && currentUser.uid && text.trim() !== "") {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuidv4(),
           text,
-          senderId: currentUser.uid, //Now safe to use here
+          senderId: currentUser.uid,
           date: Timestamp.now(),
         }),
       });
     } else {
-      //Handle the case where there is no currentUser or the text is empty
       console.error("No current user or empty message");
     }
   }
