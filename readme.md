@@ -11,6 +11,8 @@ Dieses Projekt ist ein Chat-Messenger, der mithilfe von Vite, React und TypeScri
   - TypeScript
   - TailwindCSS
   - React Router Dom
+  - Flowbite
+  - Material-Tailwind
 
 - **Backend:**
   - Firebase Authentication
