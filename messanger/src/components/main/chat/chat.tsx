@@ -41,7 +41,7 @@ export default function Chat() {
               Chat with <span className="font-bold">{displayName}</span>
             </div>
           ) : (
-            <div> </div>
+            <div>Click at someone to start a Chat with him!</div>
           )}
         </div>
         <div className="h-full m-4 overflow-y-auto">
