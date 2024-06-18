@@ -60,7 +60,6 @@ export default function Suchleiste() {
       return;
     }
     const combinedId = calculateCombinedId(currentUser, user);
-    console.log(combinedId);
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
