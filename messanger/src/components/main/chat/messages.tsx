@@ -4,10 +4,6 @@ import { doc, onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Message from "./message";
 
-interface MessagesProps {
-  currentUserId: string;
-}
-
 export default function Messages() {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);

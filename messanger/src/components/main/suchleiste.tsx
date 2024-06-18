@@ -57,7 +57,7 @@ export default function Suchleiste() {
 
   async function handleSelect() {
     if (!currentUser || !user) {
-      return; // Handle case where currentUser or user is undefined
+      return;
     }
     const combinedId = calculateCombinedId(currentUser, user);
     console.log(combinedId);
@@ -91,7 +91,7 @@ export default function Suchleiste() {
 
   return (
     <>
-      <div>
+      <div className="flex items-center justify-center">
         <input
           className="w-full p-2 text-sm text-gray-900 transition-shadow duration-300 bg-gray-100 border border-gray-300 rounded-lg shadow-none cursor-text hover:shadow-lg hover:shadow-gray-400"
           placeholder="Suche eine Person"
@@ -104,7 +104,7 @@ export default function Suchleiste() {
         {user && (
           <button
             data-popover="popover"
-            className="absolute p-4 mt-2 font-sans text-sm font-normal break-words whitespace-normal bg-white border rounded-lg shadow-lg w-max border-blue-gray-50 text-blue-gray-500 shadow-blue-gray-500/10 focus:outline-none"
+            className="absolute p-4 font-sans text-sm font-normal break-words whitespace-normal bg-white border rounded-lg shadow-lg mt-28 w-max border-blue-gray-50 text-blue-gray-500 shadow-blue-gray-500/10 focus:outline-none"
             onClick={handleSelect}
           >
             {user.displayName}
