@@ -42,8 +42,8 @@ export const ChatContextProvider = ({ children }: { children: React.ReactNode })
           user: action.payload,
           chatId:
             currentUser.uid > action.payload.uid
-              ? currentUser.uid + action.payload.uid
-              : action.payload.uid + currentUser.uid,
+              ? currentUser?.uid + action.payload.uid
+              : action.payload.uid + currentUser?.uid,
         };
       default:
         return state;

@@ -28,10 +28,9 @@ export default function Messages() {
 
   return (
     <>
-      {/* {messages.map((m: any) => (
+      {messages.map((m: any) => (
         <Message message={m} key={m.id} />
-      ))} */}
-      <Message />
+      ))}
     </>
   );
 }

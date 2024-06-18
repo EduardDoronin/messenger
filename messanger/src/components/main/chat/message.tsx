@@ -1,23 +1,18 @@
-import { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import ChatContext from "../../../context/ChatContext";
 
-export default function Message({ message }: any) {
+const Message = ({ message }: any) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  const isOwnMessage = message.senderId === currentUser?.uid;
-
   return (
-    <div className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}>
-      <div
-        className={`px-3 py-2 rounded text-white ${
-          isOwnMessage ? "bg-indigo-600 self-end" : "bg-green-600 self-start"
-        }`}
-      >
-        {message.text}
-        <span className="block text-xs text-gray-200">{message.date.toDate()}</span>
+    <div className="flex">
+      <div className="self-end px-3 py-2 mb-2 text-white bg-indigo-600 rounded">
+        <p>{message.text}</p>
       </div>
     </div>
   );
-}
+};
+
+export default Message;
