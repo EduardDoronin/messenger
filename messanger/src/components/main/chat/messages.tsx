@@ -4,7 +4,11 @@ import { doc, onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Message from "./message";
 
-export default function Messages() {
+interface MessagesProps {
+  currentUserId: string;
+}
+
+export default function Messages({ currentUserId }: MessagesProps) {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
 
@@ -24,13 +28,16 @@ export default function Messages() {
     }
   }, [data.chatId]);
 
-  console.log(messages);
-
   return (
-    <>
-      {messages.map((m: any) => (
-        <Message message={m} key={m.id} />
-      ))}
-    </>
+    <div className="flex flex-col">
+      {messages.map((m: any) => {
+        if (m.senderId && m.id) {
+          return <Message key={m.id} message={m} />;
+        } else {
+          console.warn("Invalid message format:", m);
+          return null;
+        }
+      })}
+    </div>
   );
 }
