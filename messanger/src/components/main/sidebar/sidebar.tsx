@@ -2,7 +2,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../../../firebase";
 import { AuthContext } from "../../../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { onSnapshot, doc, DocumentData } from "firebase/firestore";
+import { onSnapshot, doc, DocumentData, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import ChatContext from "../../../context/ChatContext";
 
@@ -18,8 +18,28 @@ export default function Sidebar() {
 
     const getChats = async () => {
       if (currentUser?.uid) {
-        unsubscribe = onSnapshot(doc(db, "userChats", currentUser.uid), (docSnapshot) => {
-          setChats(docSnapshot.data());
+        unsubscribe = onSnapshot(doc(db, "userChats", currentUser.uid), async (docSnapshot) => {
+          const chatsData = docSnapshot.data();
+
+          if (chatsData) {
+            const updatedChats = await Promise.all(
+              Object.entries(chatsData).map(async ([, /* chatId */ chat]) => {
+                const userDocRef = doc(db, "users", chat.userInfo.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                const displayName = userDocSnap.exists()
+                  ? userDocSnap.data().displayName
+                  : chat.userInfo.uid;
+
+                return {
+                  ...chat,
+                  userInfo: { ...chat.userInfo, displayName },
+                };
+              })
+            );
+
+            setChats(Object.fromEntries(updatedChats.map((chat) => [chat.userInfo.uid, chat])));
+          }
         });
       }
     };

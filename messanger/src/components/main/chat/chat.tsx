@@ -34,7 +34,7 @@ export default function Chat() {
 
   return (
     <>
-      <div className="grid grid-rows-[1fr, 1fr, 1fr] h-full w-full">
+      <div className="flex flex-col justify-between w-full h-full">
         <div className="flex items-center justify-center">
           {displayName ? (
             <div className="text-2xl">
@@ -44,8 +44,7 @@ export default function Chat() {
             <div> </div>
           )}
         </div>
-
-        <div className="m-4 overflow-y-auto ">
+        <div className="h-full m-4 overflow-y-auto">
           <Messages />
         </div>
 

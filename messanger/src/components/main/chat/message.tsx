@@ -16,8 +16,8 @@ const Message = ({ message }: MessageProps) => {
   const isOwnMessage = message.senderId === currentUser?.uid;
 
   const messageClass = isOwnMessage
-    ? "ml-auto px-3 py-2 mb-2 text-white bg-blue-500 rounded"
-    : "mr-auto px-3 py-2 mb-2 text-white bg-green-600 rounded";
+    ? "ml-auto px-3 py-2 mb-2 text-white bg-blue-500 rounded max-w-96 text-wrap break-words"
+    : "mr-auto px-3 py-2 mb-2 text-white bg-green-600 rounded max-w-96 text-wrap break-words";
 
   return (
     <div ref={ref} className="flex">
