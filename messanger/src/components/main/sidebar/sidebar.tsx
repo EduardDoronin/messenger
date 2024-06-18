@@ -36,16 +36,14 @@ export default function Sidebar() {
   return (
     <>
       <div className="w-1/4 border-r border-r-gray-800">
-        <div className="flex flex-row justify-between m-4">
-          <div className="flex items-center">
-            <button
-              onClick={handleLogout}
-              className="p-1 mr-2 duration-300 bg-gray-100 rounded shadow-none cursor-pointer hover:shadow-lg hover:shadow-gray-400 focus:cursor-wait"
-            >
-              Logout
-            </button>
-            {currentUser && <div>{currentUser.email}</div>}
-          </div>
+        <div className="flex flex-row items-center justify-between m-4">
+          <button
+            onClick={handleLogout}
+            className="p-1 mr-2 duration-300 bg-gray-100 rounded shadow-none cursor-pointer hover:shadow-lg hover:shadow-gray-400 focus:cursor-wait"
+          >
+            Logout
+          </button>
+          {currentUser && <div>{currentUser.email}</div>}
         </div>
         <div className="flex flex-col pt-4 m-4 border-t border-t-gray-800">
           {chats &&

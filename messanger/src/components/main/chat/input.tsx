@@ -15,6 +15,7 @@ export default function Input() {
     event.preventDefault();
 
     if (currentUser && currentUser.uid && text.trim() !== "") {
+      setText("");
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
           id: uuidv4(),

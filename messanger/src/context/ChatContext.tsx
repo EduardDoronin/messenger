@@ -1,6 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
 import { AuthContext } from "./AuthContext";
-import { calculateCombinedId } from "../components/otherLogic/combine";
 
 interface IUser {
   uid: any;
@@ -37,13 +36,13 @@ export const ChatContextProvider = ({ children }: { children: React.ReactNode })
   const chatReducer = (state: IChatState, action: IChatAction): IChatState => {
     switch (action.type) {
       case "CHANGE_USER":
-        console.log(typeof currentUser?.uid, "       test", typeof action.payload);
+        const currentUserUid = currentUser?.uid ?? "";
         return {
           user: action.payload,
           chatId:
-            currentUser.uid > action.payload.uid
-              ? currentUser?.uid + action.payload.uid
-              : action.payload.uid + currentUser?.uid,
+            currentUserUid > action.payload.uid
+              ? currentUserUid + action.payload.uid
+              : action.payload.uid + currentUserUid,
         };
       default:
         return state;

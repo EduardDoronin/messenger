@@ -56,6 +56,9 @@ export default function Suchleiste() {
   }
 
   async function handleSelect() {
+    if (!currentUser || !user) {
+      return; // Handle case where currentUser or user is undefined
+    }
     const combinedId = calculateCombinedId(currentUser, user);
     console.log(combinedId);
     try {
@@ -74,8 +77,12 @@ export default function Suchleiste() {
           displayName: currentUser?.displayName,
         };
 
-        await updateUserChats(currentUser?.uid, combinedId, userInfoCurrentUser);
-        await updateUserChats(user?.uid, combinedId, userInfoUser);
+        if (currentUser.uid) {
+          await updateUserChats(currentUser.uid, combinedId, userInfoCurrentUser);
+        }
+        if (user.uid) {
+          await updateUserChats(user.uid, combinedId, userInfoUser);
+        }
       }
     } catch (error) {
       console.log(error);

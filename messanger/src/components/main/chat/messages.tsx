@@ -8,7 +8,7 @@ interface MessagesProps {
   currentUserId: string;
 }
 
-export default function Messages({ currentUserId }: MessagesProps) {
+export default function Messages() {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
 
@@ -29,7 +29,7 @@ export default function Messages({ currentUserId }: MessagesProps) {
   }, [data.chatId]);
 
   return (
-    <div className="flex flex-col overflow-y-auto">
+    <div className="flex flex-col mr-2">
       {messages.map((m: any) => {
         if (m.senderId && m.id) {
           return <Message key={m.id} message={m} />;
