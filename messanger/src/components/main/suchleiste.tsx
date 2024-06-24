@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { calculateCombinedId } from "../otherLogic/combine";
 import {
   collection,
@@ -24,7 +24,7 @@ export default function Suchleiste() {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState<User | undefined>();
   const [err, setErr] = useState(false);
-
+  const popoverRef = useRef<HTMLButtonElement>(null);
   const { currentUser } = useContext(AuthContext);
 
   async function handleSearch() {
@@ -88,6 +88,19 @@ export default function Suchleiste() {
     }
   }
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (popoverRef.current && !popoverRef.current.contains(event.target as Node)) {
+      setUser(undefined); // Close popover by clearing user
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div className="flex items-center justify-center">
@@ -102,6 +115,7 @@ export default function Suchleiste() {
 
         {user && (
           <button
+            ref={popoverRef}
             data-popover="popover"
             className="absolute p-4 font-sans text-sm font-normal break-words whitespace-normal bg-white border rounded-lg shadow-lg mt-28 w-max border-blue-gray-50 text-blue-gray-500 shadow-blue-gray-500/10 focus:outline-none"
             onClick={handleSelect}
